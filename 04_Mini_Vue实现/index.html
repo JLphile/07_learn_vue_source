@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="../02_渲染器实现/render.js"></script>
+    <script src="../03_响应式系统/reactive.js"></script>
+    <script src="./index.js"></script>
+
+    <script>
+      // 1.根组件
+      const App = {
+        data: reactive({ counter: 0 }),
+        render() {
+          return h('div', null, [
+            h('h2', null, `当前计数：${this.data.counter}`),
+            h(
+              'button',
+              {
+                //此处应该是箭头函数，会自动到上层作用域即render中找this，
+                //而render函数是根组件调用的，所以就可以访问data中的数据
+                //如果是普通函数，那么this绑定的是window
+                onClick: () => {
+                  this.data.counter++;
+                  console.log(this.data.counter);
+                },
+              },
+              '+1'
+            ),
+          ]);
+        },
+      };
+
+      //   2.挂载根组件
+      const app = createApp(App);
+      app.mount('#app');
+    </script>
+  </body>
+</html>
