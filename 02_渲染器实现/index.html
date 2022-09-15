@@ -15,14 +15,17 @@
       // 1.通过h函数来创建一个vnode
       const vnode = h('div', { class: 'why', id: 'aaa' }, [
         h('h2', null, '当前计数:100'),
-        h('button', null, '+1'),
+        h('button', { onClick: function () {} }, '+1'),
       ]);
 
       // 2.通过mount函数将vnode挂载到div#app上
       mount(vnode, document.querySelector('#app'));
       // 3.创建新的vnode
       setTimeout(() => {
-        const vnode1 = h('div', { class: 'corderwhy', id: 'aaa' }, '新的vnode');
+        const vnode1 = h('div', { class: 'corderwhy', id: 'aaa' }, [
+          h('h2', null, '修改计数:1'),
+          h('button', { onClick: function () {} }, '-1'),
+        ]);
         patch(vnode, vnode1);
       }, 2000);
     </script>
